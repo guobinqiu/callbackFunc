@@ -21,10 +21,14 @@ func main() {
 //////////////////////////////////////////////////////////////////////////////上层
 func f1() {
 	//do something high level needs
-	f3(f2) //你可以取任何名字，甚至匿名
-	//f3(func(name string) {
-	//	fmt.Println("hello," + name) //上层拿到下层的数据自行处理
-	//})
+
+	f3(f2) //显式声明回调函数f2。注意f2后面没有括号，因为我们需要传递的是一个函数而不是它的执行结果
+
+	//或使用匿名函数形式
+	f3(func(name string) {
+		fmt.Println("hello," + name) //上层拿到下层的数据自行处理
+	})
+
 	//do something else that high level needs
 }
 
@@ -41,3 +45,17 @@ func f3(f2 func(name string)) {
 	f2(name) //下层给上层提供数据
 	//do something else that low level needs
 }
+
+//////////////////////////////////////////////////////////////////////////////
+//和我们熟悉的jquery经典回调做个对比吧
+//printPageContent函数就相当于上面的f1
+//success函数就相当于上面的f2
+//ajax函数就相当于上面的f3
+//function printPageContent() {
+//	$.ajax({
+//		url: "http://www.baidu.com",
+//		success: function(data) {
+//			console.log(data);
+//		},
+//	})
+//}
